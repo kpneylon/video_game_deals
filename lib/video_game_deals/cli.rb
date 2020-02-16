@@ -1,52 +1,51 @@
 class SalesCli
 
-  def call
+  def call                                                      
     puts "Welcome to Game Deals!!"
     puts "To see Game sales, enter 'games'"
     puts "To miss out, enter 'nah'"
     Deal.scraped_data
-    #binding.pry
     menu
   end
 
   def menu
-    input = gets.strip.downcase
+    input = nil
+    loop do
+      input = gets.strip
+      break if input == "nah"
 
-    if input == "games"
-      games_sales
-    elsif input == "nah"
-      goodbye
-    else
-      invalid_entry
-    end   
+      if input.to_i> 0 && input.to_i <= Deal.all.length
+        game_selection(input)
+      elsif input == "games"
+        games_sales
+      else 
+        invalid_entry
+      end
+    end    
+    goodbye
   end
 
   def invalid_entry
     puts "You must choose...Wisely."
-    menu
   end
   
   def games_sales
-    Deal.all.each_with_index do |deal, index|
-      puts "#{index + 1}.  #{deal.title}"
+    Deal.all.each.with_index(1) do |deal, index|
+      puts "#{index}.  #{deal.title}"
     end 
-
-    puts "What game do you want to see?"
-    input = gets.strip
-
-    game_selection(input)
+    puts "Enter the Number for the Game you like."
   end 
 
-  def game_selection(deal) 
-    deal = Deal.find_by_index(deal)
-        deal.each do |deal|
-         puts " Name: #{deal.title}" 
-         puts " Price: #{deal.price}"
-         puts " Store: #{deal.store}"
-         puts " Expiration: #{deal.expiration}"
-        end
+  def game_selection(input)
+    g = Deal.find(input)
+    puts "Title: #{g.title}"
+    puts "Price: #{g.price}"
+    puts "Store: #{g.store}"
+    puts "#{g.expiration}"
+    puts "Enter 'games' to return to the list. "
   end 
 
+  
   def goodbye
     puts "All your base are belong to us!"
   end 
