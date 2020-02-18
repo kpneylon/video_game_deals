@@ -1,16 +1,14 @@
 class Deal
-  attr_accessor :title, :price, :store, :expiration, :index
+  attr_accessor :title, :price, :store, :expiration
   
   @@all = []
 
-  @@index = 0 
 
   def initialize
     @title = title 
     @price = price 
     @store = store 
     @expiration = expiration 
-    @@index += 1
     save
   end 
 
