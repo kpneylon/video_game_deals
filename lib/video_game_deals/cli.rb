@@ -4,7 +4,7 @@ class SalesCli
     puts "Welcome to Game Deals!!"
     puts "To see Game sales, enter 'games'"
     puts "To miss out, enter 'nah'"
-    Deal.scraped_data
+    Scraper.data
     menu
   end
 
